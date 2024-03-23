@@ -75,7 +75,7 @@ function Signup() {
         passwordError = true
         setPasswaordError({
         passwordError:
-          "Sorry, password must be between 6 and 10 characters long at least include one alphabetical character and one numbric.",
+          "Sorry, password must be between 6 and 10 characters long at least include one special character and one numbric.",
       });
       if (admin.password === "") {
         passwordError = true
