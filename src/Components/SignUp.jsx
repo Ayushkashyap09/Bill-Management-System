@@ -148,19 +148,38 @@ function Signup() {
   function sumbit(e) {
     console.log('hello')
     e.preventDefault();
-    let result = nameValidation() === emailValidation() ? false : true
-    console.log(result)
-    if(result === passwordValidation()){
-        console.log('form is good')
-        dispatch(createAdmin(admin))
-        navigate(`/signin/${admin.name}`)
+    if(nameValidation()===false){
+      if(emailValidation()===false){
+        if(passwordValidation()===false){
+          dispatch(createAdmin(admin))
+          navigate(`/signin/${admin.name}`)
+        }else{
+          passwordValidation()
+        }
+      }else{
+        emailValidation()
+      }
     }else{
-        console.log('form is not good')
-        let a = nameValidation()  
-        let b = emailValidation()  
-        let c = passwordValidation()
-        console.log(a,b,c)
-    }
+      console.log('form is not good')
+      let a = nameValidation()  
+      let b = emailValidation()  
+      let c = passwordValidation()
+      console.log(a,b,c)
+      nameValidation()
+  }
+    // let result = nameValidation() === emailValidation() ? false : true
+    // console.log(result)
+    // if(result === passwordValidation()){
+    //     console.log('form is good')
+    //     dispatch(createAdmin(admin))
+    //     navigate(`/signin/${admin.name}`)
+    // }else{
+    //     console.log('form is not good')
+    //     let a = nameValidation()  
+    //     let b = emailValidation()  
+    //     let c = passwordValidation()
+    //     console.log(a,b,c)
+    // }
   }
   console.log(admin);
   console.log(nameError);
