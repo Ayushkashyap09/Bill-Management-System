@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 function CustomerList() {
     const dispatch = useDispatch()
     const state = useSelector(state=>state.billslice.data)
-    const [array,setArray] = useState(state)
+    const [array,setArray] = useState(state || [])
   console.log(state)
   useEffect(()=>{
       setArray(state)

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -13,9 +13,10 @@ export default function BillGenerator() {
     purchase_date: "",
     status: "Sent",
   });
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([{ item: "", description: "", quantity: "", price: "", total: "" }]);
   const [total, setTotal] = useState({ sub_total: "", tax: "", total: "" });
   const [pop_up,setPop_up] = useState(false)
+  const [tax,setTax] = useState('')
   function addItem() {
     setItems([
       ...items,
@@ -30,8 +31,23 @@ export default function BillGenerator() {
     const { name, value } = e.target;
     const arrayOfOject = [...items];
     arrayOfOject[index][name] = value;
+    arrayOfOject[index]['total'] = arrayOfOject[index].quantity* arrayOfOject[index].price;
     setItems(arrayOfOject);
   }
+  const finaltotal = useMemo(()=>{
+    const subb_total = items.reduce((initialValue,currentValue)=>{
+      return initialValue+currentValue.total
+    },0)
+    total.sub_total = Number(subb_total)
+    const taxx = Number(subb_total)*Number(tax)/100
+    total.tax = taxx
+    total.total = Number(subb_total)+taxx
+  },[items])
+  useMemo(()=>{
+    const taxx = total.sub_total*Number(tax)/100
+    total.tax = taxx
+    total.total = total.sub_total+taxx
+  },[tax])
   function updateClient(e) {
     const { name, value } = e.target;
     setClient((pre) => {
@@ -62,6 +78,7 @@ export default function BillGenerator() {
       setPop_up(false)
     },2000)
   }
+
   return (
     <>
       <form className="relative flex place-content-center place-items-center" onSubmit={sumbit}>
@@ -85,6 +102,7 @@ export default function BillGenerator() {
                     id="customer_name"
                     type="text"
                     name="account_name"
+                    maxLength="50"
                     onChange={updateClient}
                     required
                     value={client.account_name}
@@ -105,6 +123,9 @@ export default function BillGenerator() {
                     type="number"
                     name="contact_number"
                     onChange={updateClient}
+                    // maxlength={10}
+                    min={0} 
+                    max={9999999999}
                     required
                     value={client.contact_number}
                   />
@@ -305,7 +326,12 @@ export default function BillGenerator() {
                   </label>
                   <label className="text-sm text-gray-900" htmlFor="tax">
                     Tax
-                    <select className="ml-1 bg-gray-300" defaultValue={10}>
+                    <select 
+                    className="ml-1 bg-gray-300" 
+                    defaultValue={10}
+                    onChange={(e)=>setTax(e.target.value)}
+                    >
+                      <option selected >0</option>
                       <option>19</option>
                       <option>12</option>
                       <option>15</option>
