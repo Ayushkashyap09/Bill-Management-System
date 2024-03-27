@@ -46,7 +46,7 @@ function Signup() {
   }
   function emailValidation() {
     let emailError = false 
-    const email = /^[a-z0-9@]{3,}@[a-z]{3,}[.]{1}[a-z.]{3,}$/gm;
+    const email = /^[a-z0-9.]{3,}@[a-z]{3,}[.]{1}[a-z.]{2,}$/gm;
     if (email.test(admin.email)) {
       setEmailError({ emailError: "" });
       emailError = false 
