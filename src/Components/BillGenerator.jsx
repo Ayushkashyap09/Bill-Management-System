@@ -259,6 +259,7 @@ export default function BillGenerator() {
                       id="quantity"
                       type="number"
                       name="quantity"
+                      min={0}
                       value={data.quantity}
                       onChange={(e) => updateItem(e, index)}
                       required
@@ -275,6 +276,7 @@ export default function BillGenerator() {
                       name="price"
                       type="number"
                       placeholder="₹"
+                      min={0}
                       value={data.price}
                       onChange={(e) => updateItem(e, index)}
                       required
@@ -291,6 +293,7 @@ export default function BillGenerator() {
                       name="total"
                       type="number"
                       placeholder="₹"
+                      min={0}
                       value={data.total}
                       onChange={(e) => updateItem(e, index)}
                       required
@@ -354,6 +357,7 @@ export default function BillGenerator() {
                     type="number"
                     placeholder="₹"
                     onChange={updateTotal}
+                    min={0}
                     required
                     value={total.sub_total}
                   />
@@ -366,6 +370,7 @@ export default function BillGenerator() {
                     type="number"
                     placeholder="₹"
                     onChange={updateTotal}
+                    min={0}
                     required
                     value={total.tax}
                   />
@@ -378,6 +383,7 @@ export default function BillGenerator() {
                     type="number"
                     placeholder="₹"
                     onChange={updateTotal}
+                    min={0}
                     required
                     value={total.total}
                   />
